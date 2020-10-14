@@ -19,7 +19,7 @@ if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
     HTTP_PORT=${HTTP_PORT:-"3000"} \
     ROOT_URL=${ROOT_URL:-""} \
     DISABLE_SSH=${DISABLE_SSH:-"true"} \
-    SSH_PORT=${SSH_PORT:-"22"} \
+    SSH_PORT=${SSH_PORT:-""} \
     SSH_LISTEN_PORT=${SSH_LISTEN_PORT:-"${SSH_PORT}"} \
     LFS_START_SERVER=${LFS_START_SERVER:-"false"} \
     DB_TYPE=${DB_TYPE:-"sqlite3"} \
@@ -32,15 +32,8 @@ if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
     REQUIRE_SIGNIN_VIEW=${REQUIRE_SIGNIN_VIEW:-"false"} \
     SECRET_KEY=${SECRET_KEY:-""} \
     envsubst < /data/app.ini > ${GITEA_WORK_DIR}/custom/conf/app.ini
-
-    chown ${USER}:git ${GITEA_WORK_DIR}/custom/conf/app.ini
 fi
 
-chown -R git:git /data/gitea/
 chmod -R 750 /data/gitea/
 
-echo v4
-
-/usr/local/bin/su-exec -h
-
-/usr/local/bin/su-exec git /usr/local/bin/gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini
+gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini

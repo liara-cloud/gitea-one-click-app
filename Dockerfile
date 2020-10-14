@@ -2,18 +2,6 @@ FROM alpine:3.12
 
 RUN apk add --no-cache git bash gettext 
 
-RUN addgroup \
-    -S -g 1000 \
-    git && \
-  adduser \
-    -S -H -D \
-    --home /data/git \
-    -s /bin/bash \
-    -u 1000 \
-    -G git \
-    git && \
-  echo "git:$(dd if=/dev/urandom bs=24 count=1 status=none | base64)" | chpasswd
-
 RUN mkdir /data && cd /data \
   && wget -O gitea.bin https://dl.gitea.io/gitea/1.12.5/gitea-1.12.5-linux-amd64 \
   && chmod +x gitea.bin \ 
@@ -21,7 +9,6 @@ RUN mkdir /data && cd /data \
   && mkdir -p /data/gitea/data \
   && mkdir -p /data/gitea/log \
   && mkdir /etc/gitea \
-  && chown root:git /etc/gitea \
   && chmod 770 /etc/gitea \
   && cp gitea.bin /usr/local/bin/
 
@@ -34,8 +21,5 @@ RUN touch /tmp/.git.l \
 
 ENV RUN_MODE "prod"
 ENV GITEA_WORK_DIR /data/gitea/
-
-RUN apk add build-base make && git clone https://github.com/ncopa/su-exec.git \
-  && cd su-exec/ && make && mv su-exec /usr/local/bin/ && chmod +x /usr/local/bin/su-exec
 
 CMD [ "/usr/local/bin/setup.sh" ]
