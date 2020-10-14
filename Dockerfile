@@ -22,4 +22,6 @@ RUN touch /tmp/.git.l \
 ENV RUN_MODE "prod"
 ENV GITEA_WORK_DIR /data/gitea/
 
+RUN mkdir /tmp/.ssh-dest && ln -s /tmp/.ssh-dest /root/.ssh
+
 CMD [ "/usr/local/bin/setup.sh" ]

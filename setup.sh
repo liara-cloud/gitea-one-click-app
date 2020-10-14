@@ -36,4 +36,6 @@ fi
 
 chmod -R 750 /data/gitea/
 
+mkdir /tmp/.ssh-dest
+
 gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini
