@@ -20,8 +20,6 @@ RUN mkdir /data && cd /data \
   && mkdir -p /data/gitea/custom \
   && mkdir -p /data/gitea/data \
   && mkdir -p /data/gitea/log \
-  && chown -R git:git /data/gitea/ \
-  && chmod -R 750 /data/gitea/ \
   && mkdir /etc/gitea \
   && chown root:git /etc/gitea \
   && chmod 770 /etc/gitea \
@@ -36,5 +34,8 @@ RUN touch /tmp/.git.l \
 
 ENV RUN_MODE "prod"
 ENV GITEA_WORK_DIR /data/gitea/
+
+RUN apk add build-base make && git clone https://github.com/ncopa/su-exec.git \
+  && cd su-exec/ && make && mv su-exec /usr/local/bin/ && chmod +x /usr/local/bin/su-exec
 
 CMD [ "/usr/local/bin/setup.sh" ]

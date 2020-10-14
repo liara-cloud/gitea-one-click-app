@@ -36,4 +36,11 @@ if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
     chown ${USER}:git ${GITEA_WORK_DIR}/custom/conf/app.ini
 fi
 
-gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini
+chown -R git:git /data/gitea/
+chmod -R 750 /data/gitea/
+
+echo v4
+
+/usr/local/bin/su-exec -h
+
+/usr/local/bin/su-exec git /usr/local/bin/gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini
