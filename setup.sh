@@ -35,5 +35,6 @@ if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
 fi
 
 chmod -R 750 /data/gitea/
+rm /data/app.ini
 
 gitea.bin -c ${GITEA_WORK_DIR}/custom/conf/app.ini
