@@ -1,1 +1,1 @@
-docker build -t liaracloud/gitea-one-click-app:latest .
+docker build -t liaracloud/gitea-one-click-app:v1.16.1 --build-arg GITEA_VERSION=1.16.1 .

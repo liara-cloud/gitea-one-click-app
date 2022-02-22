@@ -1,9 +1,11 @@
 FROM alpine:3.12
 
+ARG GITEA_VERSION
+
 RUN apk add --no-cache git bash gettext 
 
 RUN mkdir /data && cd /data \
-  && wget -O gitea.bin https://dl.gitea.io/gitea/1.12.5/gitea-1.12.5-linux-amd64 \
+  && wget -O gitea.bin https://dl.gitea.io/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-amd64 \
   && chmod +x gitea.bin \ 
   && mkdir -p /data/gitea/custom \
   && mkdir -p /data/gitea/data \
