@@ -2,9 +2,15 @@
 
 set -e
 
+# TODO:
+# This if statement means we can't change Gitea's settings after initial setup using envs.
+# But this causes some issues. Users expect to be able to change settings using envs.
+# Actually this is the correct way of doing it, like WordPress one-click-app.
+# So talk to Reza about it and then you might need to remove this check.
 if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
     mkdir -p ${GITEA_WORK_DIR}/custom/conf
 
+    # TODO: What is this?
     # Set INSTALL_LOCK to true only if SECRET_KEY is not empty and
     # INSTALL_LOCK is empty
     if [ -n "$SECRET_KEY" ] && [ -z "$INSTALL_LOCK" ]; then
