@@ -8,6 +8,8 @@ set -e
 # Actually this is the correct way of doing it, like WordPress one-click-app.
 # So talk to Reza about it and then you might need to remove this check.
 if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
+    chown -R $USER_UID:$USER_GID /data
+
     mkdir -p ${GITEA_WORK_DIR}/custom/conf
 
     # TODO: What is this?
