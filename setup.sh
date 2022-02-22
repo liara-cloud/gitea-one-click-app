@@ -36,6 +36,7 @@ if [ ! -f ${GITEA_WORK_DIR}/custom/conf/app.ini ]; then
     DB_USER=${DB_USER:-"root"} \
     DB_PASSWD=${DB_PASSWD:-""} \
     INSTALL_LOCK=${INSTALL_LOCK:-"false"} \
+    I_AM_BEING_UNSAFE_RUNNING_AS_ROOT="true" \
     DISABLE_REGISTRATION=${DISABLE_REGISTRATION:-"false"} \
     REQUIRE_SIGNIN_VIEW=${REQUIRE_SIGNIN_VIEW:-"false"} \
     SECRET_KEY=${SECRET_KEY:-""} \
