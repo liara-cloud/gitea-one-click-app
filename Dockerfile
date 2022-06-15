@@ -2,7 +2,14 @@ FROM alpine:3.12
 
 ARG GITEA_VERSION
 
-RUN apk add --no-cache git bash gettext 
+RUN apk --no-cache add \
+    bash \
+    ca-certificates \
+    openssh-keygen \
+    gettext \
+    git \
+    curl \
+    gnupg
 
 RUN mkdir /data && cd /data \
   && wget -O gitea.bin https://dl.gitea.io/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-amd64 \
@@ -14,16 +21,27 @@ RUN mkdir /data && cd /data \
   && chmod 770 /etc/gitea \
   && cp gitea.bin /usr/local/bin/
 
+RUN addgroup \
+    -S -g 1000 \
+    git && \
+  adduser \
+    -S -H -D \
+    -h /tmp/gitea/git \
+    -s /bin/bash \
+    -u 1000 \
+    -G git \
+    git
+
 COPY app.ini /data/
 COPY setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/setup.sh
 
-RUN touch /tmp/.git.l \
-  && ln -s /tmp/.git.l /root/.gitconfig
-
 ENV RUN_MODE "prod"
 ENV GITEA_WORK_DIR /data/gitea/
 
-RUN mkdir /tmp/.ssh-dest && ln -s /tmp/.ssh-dest /root/.ssh
+RUN chown -R git:git /data/
+
+#git:git
+USER 1000:1000
 
 CMD [ "/usr/local/bin/setup.sh" ]
